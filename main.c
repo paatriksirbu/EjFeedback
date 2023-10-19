@@ -7,14 +7,14 @@ struct arrayLength{         // Declaramos lo que se nos pide en el enunciado.
     int arrInt[SIZE];       // array de enteros con capacidad para 10 valores.
     int arrSize;            // variable para declarar el numero de elemenos almacenados
     int arrAdd;             // suma de elementos contenidos en el array
-    };
+};
 
 typedef struct arrayLength arrayLength_t;
-                                            // Ejercicio 2
+// Ejercicio 2
 int initArray(arrayLength_t *miArray){      //Funcion que recibe por parametro un puntero a una estructura del tipo arrayLength_t
 
 
-    for (int i = 0; i < 10; ++i) {  //Pone valor -1 a todas sus posiciones.
+    for (int i = 0; i < SIZE; ++i) {  //Pone valor -1 a todas sus posiciones.
         miArray -> arrInt[i] = -1;
     }
 
@@ -25,6 +25,16 @@ int initArray(arrayLength_t *miArray){      //Funcion que recibe por parametro u
         return -1;
     }
     return 0;   //La funcion devuelve 0 si no se produce nignun error.
+}
+int printArr(arrayLength_t *miArray){
+    printf("{[");
+    for (int i = 0; i < SIZE; ++i) {
+        printf("%d", miArray -> arrInt[i]);
+        if(i != SIZE -1){
+            printf(", ");
+        }
+    }
+    printf("], %d, %d}\n", miArray ->arrSize, miArray -> arrAdd);
 }
 
 int addElement(arrayLength_t *miArray, int nuevoValor){ //Ejercicio 3
@@ -43,38 +53,57 @@ int addElement(arrayLength_t *miArray, int nuevoValor){ //Ejercicio 3
 }
 
 int main() {
-     arrayLength_t miArray;
+    arrayLength_t miArray;
 
     for (int i = 0; i < SIZE; ++i) {
         miArray.arrInt[i] = i + 1;      //Valores del 1 al 10
     }
-    
-    miArray.arrSize= SIZE; 
-    
+
+    miArray.arrSize= SIZE;
+
     miArray.arrAdd = 0;
     for (int i = 0; i < miArray.arrSize; ++i) {
         miArray.arrAdd += miArray.arrInt[i];
     }
 
     initArray(&miArray);
-    printf("La estructura ha sido inicializada correctamente");
+    printf("La estructura ha sido inicializada correctamente \n");
+    printf("Funcion al inicializar el array: ");
+    printArr(&miArray);
 
     printf("Los elementos del array son: \n");
     for (int i = 0; i < miArray.arrSize; ++i) {
         printf("%d \n", miArray.arrInt[i]);
     }
 
-    addElement(&miArray,9);
-    printf("Al agregar un elemento mas al array, el total de elemenos es de: \n");
+    addElement(&miArray,9 );
+    printf("Al agregar un elemento mas al array, el total de elementos es de: \n");
     for (int i = 0; i < miArray.arrSize; ++i) {
-        printf("%d", miArray.arrInt[i]);
+        printf("%d \n", miArray.arrInt[i]);
     }
 
     printf("Numero de elementos almacenados en el array: %d \n", miArray.arrSize);
     printf("Suma de los elementos contenidos en el array: %d \n", miArray.arrAdd);
 
+    if ( initArray(&miArray) != 0){
+        printf("Array inicializado");
+    }else{
+        printf("Error en inicializacion");
+    }
+    printArr(&miArray);
+    if ( addElement(&miArray, 22) == 0) {
+        printf("Elemento anadido");
+    }else{
+        printf("Error al anadir elemento");
+    }
+    printArr(&miArray);
+    if ( addElement(&miArray, 44) == 0) {
+        printf("Elemento anadido");
+    }else{
+        printf("Error al anadir elemento");
 
-
+    }
+    printArr(&miArray);
 
     return 0;
 }
